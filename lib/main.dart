@@ -32,6 +32,9 @@ class MyHomePage extends StatelessWidget {
       ),
       body: Column(
         children: [
+          SizedBox(
+            height: 200,
+          ),
           const Text('SliverAppBar with Hero'),
           Row(
             children: [Colors.red, Colors.blue, Colors.yellow]
