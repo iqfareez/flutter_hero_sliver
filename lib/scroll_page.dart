@@ -14,12 +14,12 @@ class _ScrollPageState extends State<ScrollPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: CustomScrollView(
-        slivers: [
-          Hero(
-            tag: widget.color,
-            child: SliverAppBar.large(
+    return Hero(
+      tag: widget.color,
+      child: Scaffold(
+        body: CustomScrollView(
+          slivers: [
+            SliverAppBar.large(
               key: UniqueKey(),
               expandedHeight: 200,
               backgroundColor: widget.color,
@@ -27,16 +27,16 @@ class _ScrollPageState extends State<ScrollPage> {
                 'This is a title blblaa',
               ),
             ),
-          ),
-          SliverList(
-            delegate: SliverChildBuilderDelegate(
-              (context, index) => ListTile(
-                title: Text('Item $index'),
+            SliverList(
+              delegate: SliverChildBuilderDelegate(
+                (context, index) => ListTile(
+                  title: Text('Item $index'),
+                ),
+                childCount: 100,
               ),
-              childCount: 100,
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
