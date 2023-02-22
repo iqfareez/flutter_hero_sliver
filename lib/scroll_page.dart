@@ -10,24 +10,13 @@ class ScrollPage extends StatefulWidget {
 }
 
 class _ScrollPageState extends State<ScrollPage> {
-  // final GlobalKey key = GlobalKey<SliverState>();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: CustomScrollView(
         slivers: [
-          Hero(
-            tag: widget.color,
-            child: SliverAppBar.large(
-              key: UniqueKey(),
-              expandedHeight: 200,
-              backgroundColor: widget.color,
-              title: const Text(
-                'This is a title blblaa',
-              ),
-            ),
-          ),
+          SliverPersistentHeader(
+              delegate: MySliverPersistentHeaderDelegate(widget.color)),
           SliverList(
             delegate: SliverChildBuilderDelegate(
               (context, index) => ListTile(
@@ -40,4 +29,47 @@ class _ScrollPageState extends State<ScrollPage> {
       ),
     );
   }
+}
+
+class MySliverPersistentHeaderDelegate extends SliverPersistentHeaderDelegate {
+  final tag;
+
+  MySliverPersistentHeaderDelegate(this.tag);
+  @override
+  Widget build(
+      BuildContext context, double shrinkOffset, bool overlapsContent) {
+    return Hero(
+      tag: tag,
+      child: Material(
+        color: tag,
+        child: Stack(
+          children: [
+            Align(
+              child: const Text(
+                'This is a title blblaa',
+              ),
+            ),
+            Align(
+              alignment: Alignment.topLeft,
+              child: IconButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  icon: Icon(Icons.arrow_back)),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  @override
+  double get maxExtent => 200;
+
+  @override
+  double get minExtent => kToolbarHeight;
+
+  @override
+  bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) =>
+      true;
 }
